@@ -1,0 +1,164 @@
+# **********************************************************************
+# MyPanel by kramski@web.de, based on "CPU Panel (8-core)" theme for Conky =
+by Tony George (teejee2008@gmail.com)
+#
+# Webpage: http://teejeetech.blogspot.in/
+# **********************************************************************
+
+alignment top_right
+background yes
+border_width 1
+cpu_avg_samples 2
+default_bar_size 0 6
+# default_graph_size 0 18 # zieht nicht f=C3=BCr Diskio etc.
+double_buffer yes
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+extra_newline no
+gap_x 10
+gap_y 0
+minimum_size 180 730
+maximum_width 180
+net_avg_samples 2
+no_buffers yes
+out_to_console no
+out_to_stderr no
+own_window yes
+own_window_argb_visual yes
+# own_window_colour grey
+own_window_hints undecorated,below,skip_taskbar,sticky,skip_pager
+own_window_transparent yes
+own_window_type normal
+short_units yes
+show_graph_range no
+show_graph_scale no
+stippled_borders 0
+update_interval 2.0
+uppercase no
+use_spacer none
+use_xft yes
+xftalpha 0.1
+xftfont Noto-Sans:size=3D10
+
+default_color white
+default_outline_color white
+default_shade_color black
+color0 white    # Default/Werte
+color1 white    # =C3=9Cberschriften
+color2 555555     # Werte Graph innen
+
+TEXT
+####################
+##### System   #####
+####################
+#${color1}SANDL ${color0}${execi 3600 uname -r}${alignr}${acpitemp}=C2=B0C=
+=20
+${color1}HASPL ${color0}${execi 3600 uname -r}${alignr}${acpitemp}=C2=B0C=
+=20
+#
+####################
+##### CPU etc. #####
+####################
+${color1}LOAD ${color0}${alignr}${loadavg}
+${loadgraph 24,0}
+#
+#${color1}CPU ${color0}${hwmon 1 temp 1}=C2=B0C${alignr}${freq}Mhz ${cpu cp=
+u0}%
+${color1}CPU ${color0}${hwmon 0 temp 1}=C2=B0C${alignr}${freq}Mhz ${cpu cpu=
+0}%
+${cpubar cpu0}
+${top name 1} $alignr ${top cpu 1}%
+${top name 2} $alignr ${top cpu 2}%
+${top name 3} $alignr ${top cpu 3}%
+${top name 4} $alignr ${top cpu 4}%
+#${top name 5} $alignr ${top cpu 5}%
+
+${color1}RAM ${color0}${alignr}${mem}/${memmax} ${memperc}%
+${membar 5,}
+${top_mem name 1} $alignr ${top_mem mem_res 1}
+${top_mem name 2} $alignr ${top_mem mem_res 2}
+${top_mem name 3} $alignr ${top_mem mem_res 3}
+${top_mem name 4} $alignr ${top_mem mem_res 4}
+#${top_mem name 5} $alignr ${top_mem mem_res 5}
+
+###############
+##### Disk ####
+###############
+${color1}DISK ${color0}${alignr}${diskio}
+#
+${color1}/${color0}${alignr}${fs_used /}/${fs_size /} ${fs_used_perc /}%
+${fs_bar /}
+${color1}/home${color0}${alignr}${fs_used /home}/${fs_size /home} ${fs_used=
+_perc /home}%
+${fs_bar /home}
+${color1}/mufu${color0}${alignr}${fs_used /mufu}/${fs_size /mufu} ${fs_used=
+_perc /mufu}%
+${fs_bar /mufu}
+${color1}/data01${color0}${alignr}${fs_used /data01}/${fs_size /data01} ${f=
+s_used_perc /data01}%
+${fs_bar /data01}
+#${color1}/data02${color0}${alignr}${fs_used /data02}/${fs_size /data02} ${=
+fs_used_perc /data02}%
+#${fs_bar /data02}
+#
+${color1}sda${color0}${alignr}${diskio_read /dev/sda}/${diskio_write /dev/s=
+da} ${hddtemp /dev/sda}=C2=B0C
+${diskiograph_read /dev/sda 24,0}
+${voffset -10}#
+${diskiograph_write /dev/sda 24,0}
+#
+#${color1}sdb/sdc${color0}${alignr}${diskio_read /dev/sdb}/${diskio_write /=
+dev/sdb} ${hddtemp /dev/sdb}/${hddtemp /dev/sdc}=C2=B0C
+${color1}sdb${color0}${alignr}${alignr}${diskio_read /dev/sdb}/${diskio_wri=
+te /dev/sdb} ${hddtemp /dev/sdb}=C2=B0C
+${diskiograph_read /dev/sdb 24,0}
+${voffset -10}#
+${diskiograph_write /dev/sdb 24,0}
+#
+#${color1}sdd${color0}${alignr}${alignr}${diskio_read /dev/sdd}/${diskio_wr=
+ite /dev/sdd} ${hddtemp /dev/sdd}=C2=B0C
+#${diskiograph_read /dev/sdd 24,0}
+#${voffset -10}#
+#${diskiograph_write /dev/sdd 24,0}#
+
+##################
+#### Network #####
+##################
+${if_existing /proc/net/route enp3s0}#
+# enp3s0/eth0
+${color1}ETHERNET${color0}
+${color1}Local${color0}${alignr}${addr enp3s0}
+${color1}Public${color0}${alignr}${execi 3600 wget -q -O /dev/stdout http:/=
+/checkip.dyndns.org/ | cut -d : -f 2- | cut -d \< -f -1}
+${color1}enp3s0${color0}${alignr}${downspeed enp3s0}/${upspeed enp3s0}
+${downspeedgraph enp3s0 24,0}
+${voffset -10}#
+${upspeedgraph enp3s0 24,0}
+${else}${if_existing /proc/net/route enp6s0}#
+# enp6s0/eth0
+${color1}ETHERNET${color0}
+${color1}Local${color0}${alignr}${addr enp6s0}
+${color1}Public${color0}${alignr}${execi 3600 wget -q -O /dev/stdout http:/=
+/checkip.dyndns.org/ | cut -d : -f 2- | cut -d \< -f -1}
+${color1}enp6s0${color0}${alignr}${downspeed enp6s0}/${upspeed enp6s0}
+${downspeedgraph enp6s0 24,0}
+${voffset -10}#
+${upspeedgraph enp6s0 24,0}
+${else}${if_existing /proc/net/route wlo1}#
+# wlo1 #
+${color1}SSID${color0}${alignr}${wireless_essid wlo1}
+${color1}Local${color0}${alignr}${addr wlo1}
+${color1}Public${color0}${alignr}${execi 3600 wget -q -O /dev/stdout http:/=
+/checkip.dyndns.org/ | cut -d : -f 2- | cut -d \< -f -1}
+${color1}wlo1${color0}${alignr}${downspeed wlo1}/${upspeed wlo1}
+${downspeedgraph wlo1 24,0}
+${voffset -10}#
+${upspeedgraph   wlo1 24,0}
+${else}#
+# no network
+${color1}No (known) network${color0}
+${endif}#
+${endif}#
+${endif}#
