@@ -40,6 +40,6 @@ add key to your agent
 
 ### Debian
 
-apt install vim git
+apt install vim git curl
 
 
