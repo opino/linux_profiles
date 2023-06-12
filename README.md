@@ -15,6 +15,9 @@
 > git commit -m "description"
  
 > git push orgin master
+>
+> git push
+
  
 ## Use git
 
