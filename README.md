@@ -1,2 +1,7 @@
 # linux_profiles
-Profile Files for Linux
+
+## Install your favorite packages 
+
+### Debian
+
+apt install vim git
