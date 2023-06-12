@@ -10,7 +10,9 @@
 ## Holy git trinity
 
 > git add file.txt
+> 
 > git commit -m "description"
+> 
 > git push orgin master
  
 ## Use git
