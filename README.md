@@ -4,15 +4,16 @@
 ## Git settings
 
 > git config --global user.email "ligma@example.com"
+ 
 > git config --global user.name "ligma"
 
 
 ## Holy git trinity
 
 > git add file.txt
-> 
+ 
 > git commit -m "description"
-> 
+ 
 > git push orgin master
  
 ## Use git
